@@ -70,4 +70,4 @@ gem "devise", "~> 4.9"
 gem "cancancan", "~> 3.6"
 
 gem "dartsass-rails"
-gem "bootstrap", "~> 5.3.3"
+gem "bootstrap", "~> 5.3.8"
