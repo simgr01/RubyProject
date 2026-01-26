@@ -4,18 +4,8 @@
       <h1 class="mb-1" style="font-size: 1.6rem; font-weight: 650;">Opret konto</h1>
       <p class="page-subtitle mb-4">Opret en konto for at oprette opslag og bud.</p>
 
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= form_for(resource, as: resource_name, url: company_registration_path) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
-
-        <div class="mb-3">
-          <%= f.label :firstName, "Fornavn", class: "form-label" %>
-          <%= f.text_field :firstName, class: "form-control", required: true, placeholder: "Fornavn" %>
-        </div>
-
-        <div class="mb-3">
-          <%= f.label :lastName, "Efternavn", class: "form-label" %>
-          <%= f.text_field :lastName, class: "form-control", required: true, placeholder: "Efternavn" %>
-        </div>
 
         <div class="mb-3">
           <%= f.label :email, "Email", class: "form-label" %>
@@ -23,23 +13,13 @@
         </div>
 
         <div class="mb-3">
-          <%= f.label :phoneNumber, "Telefonnummer", class: "form-label" %>
-          <%= f.text_field :phoneNumber, class: "form-control", required: true, placeholder: "Telefonnummer" %>
+            <%= f.label :company_name, "Firma navn", class: "form-label" %>
+            <%= f.text_field :company_name, class: "form-control", required: true, placeholder: "Firma navn", maxlength: 255 %>
         </div>
 
-        <div class="mb-3">
-          <%= f.label :address, "Adresse", class: "form-label" %>
-          <%= f.text_field :address, class: "form-control", required: true, placeholder: "Adresse" %>
-        </div>
-
-        <div class="mb-3">
-          <%= f.label :postalCode, "Postnummer", class: "form-label" %>
-          <%= f.text_field :postalCode, class: "form-control", required: true, placeholder: "Postnummer" %>
-        </div>
-
-        <div class="mb-3">
-          <%= f.label :city, "By", class: "form-label" %>
-          <%= f.text_field :city, class: "form-control", required: true, placeholder: "By" %>
+         <div class="mb-3">
+            <%= f.label :cvr_number, "CVR nummer", class: "form-label" %>r
+            <%= f.text_field :cvr_number, class: "form-control", required: true, placeholder: "CVR nummer" %>
         </div>
 
         <div class="mb-3">

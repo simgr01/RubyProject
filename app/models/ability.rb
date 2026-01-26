@@ -17,7 +17,8 @@ class Ability
     if user.company?
       can :read, Listing
       can :create, Bid
-      can :read, Bid, user_id: user.id
+      can :destroy, Bid, user_id: user.id 
+      can :read, Bid
       can :read, Listing
     end
   end

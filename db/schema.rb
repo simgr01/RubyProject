@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_08_210352) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_26_114837) do
   create_table "bids", force: :cascade do |t|
     t.boolean "accepted"
     t.datetime "created_at", null: false
@@ -34,9 +34,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_08_210352) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "address"
+    t.string "city"
+    t.string "company_name"
     t.datetime "created_at", null: false
+    t.string "cvr_number"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "firstName"
+    t.string "lastName"
+    t.integer "phoneNumber"
+    t.integer "postalCode"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"

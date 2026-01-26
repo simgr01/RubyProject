@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'users/registrations' }
+
+  devise_scope :user do
+    get '/company/sign_up', to: 'companies/registrations#new', as: :new_company_registration
+    post '/company/sign_up', to: 'companies/registrations#create', as: :company_registration
+    get '/users/sign_in', to: 'companies/sessions#new', as: :new_company_session
+    post '/users/sign_in', to: 'companies/sessions#create', as: :company_session
+  end
+
+  
   resources :listings do
-    resources :bids, only: %i[ create ] do
+    resources :bids, only: %i[ create destroy ] do
       member do
         post :accept
       end

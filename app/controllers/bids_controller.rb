@@ -18,6 +18,15 @@ class BidsController < ApplicationController
     redirect_to @listing, notice: "Bid accepted"
   end
 
+  def destroy
+    authorize! :destroy, @bid
+    if @bid.accepted
+      @listing.update(status: "open")
+    end
+    @bid.destroy!
+    redirect_to @listing
+  end
+
   private
 
   def set_listing

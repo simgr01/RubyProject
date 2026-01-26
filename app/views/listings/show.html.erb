@@ -23,6 +23,11 @@
               <span class="badge bg-success">Vindende bud</span>
             <% end %>
           </div>
+          <div class="text-end">
+            <% if can?(:destroy, bid) %>
+                <%= button_to "Slet", listing_bid_path(@listing, bid), method: :delete, class: "btn btn-outline-danger btn-sm", form: { class: "d-inline" } %>
+            <% end %>
+          </div>
         </div>
 
         <% if can?(:accept, bid) && @listing.open? %>
@@ -61,7 +66,7 @@
 
 <div class="mt-4 d-flex flex-wrap gap-2">
   <%= link_to "Tilbage til opslag", listings_path, class: "btn btn-light-outline" %>
-  <% if can? :update, @listing %>
+  <% if can?(:update, @listing) && !@listing.closed? %>
     <%= link_to "Rediger", edit_listing_path(@listing), class: "btn btn-light-outline" %>
   <% end %>
   <% if can? :destroy, @listing %>

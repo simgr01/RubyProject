@@ -11,4 +11,5 @@ class Bid < ApplicationRecord
       update!(accepted: true)
     end
   end
+
 end

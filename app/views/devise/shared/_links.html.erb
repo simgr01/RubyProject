@@ -7,6 +7,10 @@
     <%= link_to "Opret konto", new_registration_path(resource_name), class: "btn btn-light-outline" %>
   <% end %>
 
+  <%- if devise_mapping.registerable? && controller_name != "companies/registrations" && controller_name != "registrations" %>
+    <%= link_to "Opret Virksomhedskonto", new_company_registration_path, class: "btn btn-light-outline" %>
+  <% end %>
+
   <%- if devise_mapping.recoverable? && controller_name != "passwords" && controller_name != "registrations" %>
     <%= link_to "Glemt adgangskode?", new_password_path(resource_name), class: "btn btn-light-outline" %>
   <% end %>
