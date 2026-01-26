@@ -8,14 +8,14 @@ class Ability
 
     if user.customer?
       can :create, Listing
-      can :read, Listing
+      can :read, Listing, user_id: user.id
       can [ :update, :destroy ], Listing, user_id: user.id
       can :read, Bid, listing: { user_id: user.id }
       can :accept, Bid, listing: { user_id: user.id }
     end
 
     if user.company?
-      can :access, :company_dashboard
+      can :read, Listing
       can :create, Bid
       can :read, Bid, user_id: user.id
       can :read, Listing

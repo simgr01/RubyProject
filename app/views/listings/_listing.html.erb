@@ -1,12 +1,25 @@
 <div id="<%= dom_id listing %>">
-  <div>
-    <strong>Title:</strong>
-    <%= listing.title %>
-  </div>
+  <div class="surface-card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-start mb-2">
+        <h1 class="mb-0" style="font-size: 1.6rem; font-weight: 650;">
+          <%= listing.title %>
+        </h1>
+        <% if listing.status.present? %>
+          <% status_class = listing.status.to_s.downcase == "open" ? "badge-status-open" : "badge-status-closed" %>
+          <span class="badge-status <%= status_class %>">
+            <%= listing.status == "open" ? "Åben" : "Lukket" %>
+          </span>
+        <% end %>
+      </div>
 
-  <div>
-    <strong>Description:</strong>
-    <%= listing.description %>
+      <div class="muted mb-3">
+        <strong>Beskrivelse</strong>
+      </div>
+      <div>
+        <%= simple_format(listing.description) %>
+      </div>
+    </div>
   </div>
 
 </div>

@@ -1,12 +1,18 @@
-<% content_for :title, "Editing listing" %>
+<% content_for :title, "Rediger opslag" %>
 
-<h1>Editing listing</h1>
+<div class="page-header">
+  <div>
+    <h1>Rediger opslag</h1>
+    <p class="page-subtitle">Opdater opslaget.</p>
+  </div>
+  <div class="d-flex gap-2">
+    <%= link_to "Se detaljer", @listing, class: "btn btn-light-outline" %>
+    <%= link_to "Tilbage", listings_path, class: "btn btn-light-outline" %>
+  </div>
+</div>
 
-<%= render "form", listing: @listing %>
-
-<br>
-
-<div>
-  <%= link_to "Show this listing", @listing %> |
-  <%= link_to "Back to listings", listings_path %>
+<div class="surface-card">
+  <div class="card-body">
+    <%= render "form", listing: @listing %>
+  </div>
 </div>

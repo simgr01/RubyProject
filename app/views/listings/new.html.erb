@@ -1,11 +1,17 @@
-<% content_for :title, "New listing" %>
+<% content_for :title, "Opret opslag" %>
 
-<h1>New listing</h1>
+<div class="page-header">
+  <div>
+    <h1>Opret opslag</h1>
+    <p class="page-subtitle">Opret et nyt opslag.</p>
+  </div>
+  <div>
+    <%= link_to "Tilbage", listings_path, class: "btn btn-light-outline" %>
+  </div>
+</div>
 
-<%= render "form", listing: @listing %>
-
-<br>
-
-<div>
-  <%= link_to "Back to listings", listings_path %>
+<div class="surface-card">
+  <div class="card-body">
+    <%= render "form", listing: @listing %>
+  </div>
 </div>

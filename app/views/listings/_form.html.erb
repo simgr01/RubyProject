@@ -1,9 +1,10 @@
 <%= form_with(model: listing) do |form| %>
   <% if listing.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(listing.errors.count, "error") %> prohibited this listing from being saved:</h2>
-
-      <ul>
+    <div class="alert alert-danger">
+      <div class="fw-semibold mb-1">
+        <%= pluralize(listing.errors.count, "error") %> prohibited this listing from being saved
+      </div>
+      <ul class="mb-0">
         <% listing.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -21,5 +22,8 @@
     <%= form.text_area :description, class: "form-control", rows: 3 %>
   </div>
 
-  <%= form.submit "Create Listing", class: "btn btn-primary" %>
+  <div class="d-flex gap-2">
+    <%= form.submit (listing.persisted? ? "Gem ændringer" : "Opret opslag"), class: "btn btn-primary" %>
+    <%= link_to "Annuller", listings_path, class: "btn btn-light-outline" %>
+  </div>
 <% end %>
