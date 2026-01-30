@@ -8,4 +8,3 @@ class Companies::SessionsController < Devise::SessionsController
       super
     end
   end
-  

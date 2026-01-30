@@ -5,13 +5,14 @@ class ListingsController < ApplicationController
 
   # GET /listings or /listings.json
   def index
-    @listings = Listing.all
+    @listings = Listing.active
   end
 
   # GET /listings/1 or /listings/1.json
   def show
-    @bids = @listing.bids.accessible_by(current_ability).order(price: :asc)
+    @bids = @listing.bids.active.accessible_by(current_ability).order(accepted: :desc , price: :asc)
     @bid = Bid.new
+    @conversation = @listing.conversation.active.first
   end
 
   # GET /listings/new
@@ -53,7 +54,7 @@ class ListingsController < ApplicationController
 
   # DELETE /listings/1 or /listings/1.json
   def destroy
-    @listing.destroy!
+    @listing.soft_delete!
 
     respond_to do |format|
       format.html { redirect_to listings_path, notice: "Listing was successfully destroyed.", status: :see_other }

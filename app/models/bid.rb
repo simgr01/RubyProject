@@ -1,4 +1,6 @@
 class Bid < ApplicationRecord
+  include SoftDeletable
+
   belongs_to :listing
   belongs_to :user
 

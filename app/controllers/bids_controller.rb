@@ -15,6 +15,7 @@ class BidsController < ApplicationController
   def accept
     authorize! :accept, @bid
     @bid.accept!
+    Conversation.create!(listing: @bid.listing, user: @bid.listing.user, company: @bid.user)
     redirect_to @listing, notice: "Bid accepted"
   end
 
@@ -22,8 +23,10 @@ class BidsController < ApplicationController
     authorize! :destroy, @bid
     if @bid.accepted
       @listing.update(status: "open")
+      conversation = @listing.conversation.active.first
+      conversation&.soft_delete!
     end
-    @bid.destroy!
+    @bid.soft_delete!
     redirect_to @listing
   end
 

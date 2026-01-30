@@ -10,27 +10,56 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_26_114837) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_28_132716) do
   create_table "bids", force: :cascade do |t|
     t.boolean "accepted"
     t.datetime "created_at", null: false
+    t.datetime "deleted_at"
     t.integer "listing_id", null: false
     t.text "message"
     t.decimal "price"
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
+    t.index ["deleted_at"], name: "index_bids_on_deleted_at"
     t.index ["listing_id"], name: "index_bids_on_listing_id"
     t.index ["user_id"], name: "index_bids_on_user_id"
   end
 
+  create_table "conversations", force: :cascade do |t|
+    t.integer "company_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "deleted_at"
+    t.integer "listing_id"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["company_id"], name: "index_conversations_on_company_id"
+    t.index ["deleted_at"], name: "index_conversations_on_deleted_at"
+    t.index ["listing_id"], name: "index_conversations_on_listing_id"
+    t.index ["user_id"], name: "index_conversations_on_user_id"
+  end
+
   create_table "listings", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.datetime "deleted_at"
     t.text "description"
     t.string "status", default: "open"
     t.string "title"
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
+    t.index ["deleted_at"], name: "index_listings_on_deleted_at"
     t.index ["user_id"], name: "index_listings_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "body"
+    t.integer "conversation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "deleted_at"
+    t.integer "sender_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["deleted_at"], name: "index_messages_on_deleted_at"
+    t.index ["sender_id"], name: "index_messages_on_sender_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -39,6 +68,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_26_114837) do
     t.string "company_name"
     t.datetime "created_at", null: false
     t.string "cvr_number"
+    t.datetime "deleted_at"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "firstName"
@@ -50,11 +80,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_26_114837) do
     t.string "reset_password_token"
     t.string "role"
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "bids", "listings"
   add_foreign_key "bids", "users"
+  add_foreign_key "conversations", "listings"
+  add_foreign_key "conversations", "users"
+  add_foreign_key "conversations", "users", column: "company_id"
   add_foreign_key "listings", "users"
+  add_foreign_key "messages", "conversations"
+  add_foreign_key "messages", "users", column: "sender_id"
 end
