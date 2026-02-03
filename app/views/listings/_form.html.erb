@@ -13,14 +13,24 @@
   <% end %>
 
   <div class="mb-3">
-    <%= form.label :title, class: "form-label" %>
+    <%= form.label :title, "Titel", class: "form-label" %>
     <%= form.text_field :title, class: "form-control", required: true %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :description, class: "form-label" %>
+    <%= form.label :description, "Beskrivelse", class: "form-label" %>
     <%= form.text_area :description, class: "form-control", rows: 3 %>
   </div>
+
+  <% listing.images.each do |image| %>
+    <%= form.hidden_field :images, multiple: true, value: image.signed_id %>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :images, "Billeder", class: "form-label" %>
+    <%= form.file_field :images, multiple: true,  class: "form-control" %>
+  </div>
+
 
   <div class="d-flex gap-2">
     <%= form.submit (listing.persisted? ? "Gem ændringer" : "Opret opslag"), class: "btn btn-primary" %>

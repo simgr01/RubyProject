@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         post :accept
       end
     end
+    resources :images, only: [:destroy]
   end
 
   resources :conversations, only: [:show] do

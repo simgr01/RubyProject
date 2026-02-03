@@ -15,6 +15,11 @@ class Ability
 
       can :read, Conversation, user_id: user.id
       can :create, Message, conversation: { user_id: user.id }
+      
+      can :destroy, ActiveStorage::Attachment do |attachment|
+        attachment.record.user_id == user.id
+      end
+      
     end
 
     if user.company?

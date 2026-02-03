@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Auction" %></title>
+    <title><%= content_for(:title) || "HåndværkerBørsen" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Auction">
@@ -24,25 +24,38 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-0">
-      <div class="container-fluid">
+  <body class="app-body">
+    <nav class="navbar navbar-expand-lg navbar-dark app-navbar mb-0">
+      <div class="container">
         <a class="navbar-brand" href="/">HåndværkerBørsen</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
+          <ul class="navbar-nav ms-auto align-items-center gap-1">
+            <li class="nav-item">
+              <%= link_to "Opslag", listings_path, class: "nav-link" %>
+            </li>
+            <% if user_signed_in? && current_user.company? %>
+              <li class="nav-item">
+                <%= link_to "Mine bud", "#", class: "nav-link disabled", aria: { disabled: true } %>
+              </li>
+            <% end %>
             <% if user_signed_in? %>
-              <li class="nav-item me-2 d-flex align-items-center text-white-50 small">
-                <span>Logget ind</span>
+              <li class="nav-item me-2 d-flex flex-column align-items-end text-white-50 small">
+                <span class="fw-semibold text-white">
+                  <%= current_user.display_name %>
+                </span>
+                <span class="text-white-50 text-uppercase" style="letter-spacing: 0.08em; font-size: 0.65rem;">
+                  <%= current_user.role&.capitalize %>
+                </span>
               </li>
               <li class="nav-item">
-                <%= button_to "Log ud", destroy_user_session_path, method: :delete, class: "nav-link btn btn-link px-3" %>
+                <%= button_to "Log ud", destroy_user_session_path, method: :delete, class: "btn btn-sm btn-outline-light rounded-pill px-3 ms-1" %>
               </li>
             <% else %>
               <li class="nav-item">
-                <%= link_to "Log ind", new_user_session_path, class: "nav-link px-3" %>
+                <%= link_to "Log ind", new_user_session_path, class: "btn btn-sm btn-outline-light rounded-pill px-3" %>
               </li>
             <% end %>
           </ul>

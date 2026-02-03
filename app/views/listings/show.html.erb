@@ -1,99 +1,134 @@
 <%= render @listing %>
 
-<% if @bids.any? %>
-  <div class="mt-4">
-    <h3 class="section-title">Bud</h3>
+<!-- Bidding Section -->
+<div class="surface-card section-card mt-4">
+  <div class="section-header">
+    <div class="d-flex align-items-center gap-2">
+      <h2 class="section-title-with-accent">Budgivning</h2>
+      <% if @bids.any? %>
+        <span class="bid-count-badge">
+          <%= pluralize(@bids.count, "bud") %>
+        </span>
+      <% end %>
+    </div>
   </div>
-
-  <% @bids.each do |bid| %>
-    <div class="surface-card mb-3">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-start gap-3">
-          <div>
-            <div class="text-muted small mb-1"><%= bid.user.company_name %></div>
-            <div class="fw-semibold">
-              <%= number_to_currency(bid.price, unit: "DKK") %>
+  <div class="card-body pt-3">
+    <% if @bids.any? %>
+      <% @bids.each do |bid| %>
+        <div class="bid-item-card <%= 'bid-winner' if bid.accepted? %>">
+          <div class="d-flex justify-content-between align-items-start gap-3">
+            <div class="flex-grow-1">
+              <div class="bid-price-large">
+                <%= number_to_currency(bid.price, unit: "DKK", separator: ",", delimiter: ".") %>
+              </div>
+              <% if bid.message.present? %>
+                <div class="bid-message mt-2">
+                  <%= bid.message %>
+                </div>
+              <% end %>
             </div>
-            <% if bid.message.present? %>
-              <div class="card-text mt-2"><%= simple_format(bid.message) %></div>
-            <% end %>
-          </div>
-          <div class="text-end">
-            <% if bid.accepted? %>
-              <span class="badge bg-success">Vindende bud</span>
-            <% end %>
-          </div>
-          <div class="text-end">
-            <% if can?(:destroy, bid) %>
-                <%= button_to "Slet", listing_bid_path(@listing, bid), method: :delete, class: "btn btn-outline-danger btn-sm", form: { class: "d-inline" } %>
-            <% end %>
+            <div class="d-flex flex-column align-items-end gap-2">
+              <% if bid.accepted? %>
+                <span class="badge-winning-bid">
+                  <span class="badge-icon">🏆</span>
+                  Vindende bud
+                </span>
+              <% end %>
+              <% if can?(:destroy, bid) %>
+                <%= button_to "Slet", listing_bid_path(@listing, bid), method: :delete, class: "btn btn-delete-bid", form: { class: "d-inline" } %>
+              <% end %>
+              <% if can?(:accept, bid) && @listing.open? %>
+                <%= button_to "Accepter bud", accept_listing_bid_path(@listing, bid), method: :post, class: "btn btn-accept-bid mt-2" %>
+              <% end %>
+            </div>
           </div>
         </div>
-
-        <% if can?(:accept, bid) && @listing.open? %>
-          <div class="mt-3">
-            <%= button_to "Accepter bud", accept_listing_bid_path(@listing, bid), method: :post, class: "btn btn-success btn-sm" %>
-          </div>
-        <% end %>
+      <% end %>
+    <% else %>
+      <div class="empty-bids-card">
+        <div class="empty-bids-icon">📭</div>
+        <div class="empty-bids-title">Ingen bud endnu</div>
+        <div class="empty-bids-text">Der er ingen bud på dette opslag endnu.</div>
       </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- Closed Listing Message -->
+<% if @listing.closed? %>
+  <div class="surface-card section-card mt-4">
+    <div class="card-body text-center py-4">
+      <div class="closed-icon mb-2">🔒</div>
+      <div class="closed-title mb-1">Dette opslag er lukket</div>
+      <div class="closed-text">Der kan ikke længere afgives bud på dette opslag.</div>
     </div>
-  <% end %>
+  </div>
 <% end %>
 
+<!-- Send Bid Form -->
 <% if can?(:create, Bid) && @listing.open? %>
-  <div class="mt-4">
-    <h3 class="section-title">Send bud</h3>
-  </div>
-
-  <div class="surface-card">
-    <div class="card-body">
+  <div class="surface-card section-card mt-4">
+    <div class="section-header">
+      <h2 class="section-title-with-accent">Send bud</h2>
+    </div>
+    <div class="card-body pt-3">
       <%= form_with model: [@listing, @bid], local: true do |f| %>
         <div class="mb-3">
-          <%= f.label :price, class: "form-label" %>
-          <%= f.number_field :price, step: 0.01, required: true, class: "form-control" %>
+          <label class="form-label-with-icon">
+            Pris (DKK)
+          </label>
+          <%= f.number_field :price, step: 0.01, required: true, class: "form-control", placeholder: "kr 0.00" %>
         </div>
 
         <div class="mb-3">
-          <%= f.label :message, class: "form-label" %>
-          <%= f.text_area :message, class: "form-control", rows: 3 %>
+          <label class="form-label-with-icon">
+            Besked (valgfrit)
+          </label>
+          <%= f.text_area :message, class: "form-control", rows: 4, placeholder: "Tilføj en besked til dit bud..." %>
         </div>
 
-        <%= f.submit "Place bid", class: "btn btn-primary" %>
+        <%= f.submit "Send bud", class: "btn btn-primary btn-send-bid" %>
       <% end %>
     </div>
   </div>
 <% end %>
 
+<!-- Action Buttons -->
 <div class="mt-4 d-flex flex-wrap gap-2">
-  <%= link_to "Tilbage til opslag", listings_path, class: "btn btn-light-outline" %>
+  <%= link_to "← Tilbage til opslag", listings_path, class: "btn btn-action-secondary" %>
   <% if can?(:update, @listing) && !@listing.closed? %>
-    <%= link_to "Rediger", edit_listing_path(@listing), class: "btn btn-light-outline" %>
+    <%= link_to "Rediger", edit_listing_path(@listing), class: "btn btn-action-secondary" %>
   <% end %>
   <% if can? :destroy, @listing %>
-    <%= button_to "Slet", @listing, method: :delete, class: "btn btn-outline-danger", form: { class: "d-inline" } %>
+    <%= button_to "Slet", @listing, method: :delete, class: "btn btn-action-delete", form: { class: "d-inline" } %>
   <% end %>
 </div>
 
+<!-- Private Chat -->
 <% if @conversation && can?(:read, @conversation) %>
-  <div class="card mt-4">
-    <div class="card-header fw-semibold">
-      Privat chat
+  <div class="surface-card section-card mt-4">
+    <div class="section-header">
+      <h2 class="section-title-with-accent">Privat chat</h2>
     </div>
-
-    <div class="card-body" style="max-height: 300px; overflow-y: auto;">
-      <% @conversation.messages.order(:created_at).each do |message| %>
-        <div class="mb-2">
-            <strong><%= message.sender.display_name %>:</strong>
-          <%= message.body %>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="card-footer">
+    <div class="card-body pt-3">
+      <div class="chat-body mb-3">
+        <% @conversation.messages.order(:created_at).each do |message| %>
+          <div class="chat-message mb-3">
+            <div class="chat-message-meta">
+              <strong><%= message.sender.display_name %></strong>
+            </div>
+            <div class="chat-message-body">
+              <%= message.body %>
+            </div>
+          </div>
+        <% end %>
+      </div>
       <%= form_with model: [@conversation, Message.new], local: true do |f| %>
         <div class="input-group">
           <%= f.text_field :body, class: "form-control", placeholder: "Skriv en besked..." %>
-          <button class="btn btn-primary">Send</button>
+          <button class="btn btn-primary btn-send-chat">
+             Send
+          </button>
         </div>
       <% end %>
     </div>

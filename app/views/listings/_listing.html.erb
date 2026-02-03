@@ -1,25 +1,41 @@
 <div id="<%= dom_id listing %>">
-  <div class="surface-card">
-    <div class="card-body">
-      <div class="d-flex justify-content-between align-items-start mb-2">
-        <h1 class="mb-0" style="font-size: 1.6rem; font-weight: 650;">
-          <%= listing.title %>
-        </h1>
-        <% if listing.status.present? %>
-          <% status_class = listing.status.to_s.downcase == "open" ? "badge-status-open" : "badge-status-closed" %>
-          <span class="badge-status <%= status_class %>">
-            <%= listing.status == "open" ? "Åben" : "Lukket" %>
-          </span>
-        <% end %>
-      </div>
+  <!-- Header Card -->
+  <div class="listing-header-card">
+    <div class="d-flex align-items-center gap-3 mb-3">
+      <h1 class="listing-header-title mb-0">
+        <%= listing.title %>
+      </h1>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <% if listing.status.present? %>
+        <% status_class = listing.status.to_s.downcase == "open" ? "badge-status-open-header" : "badge-status-closed-header" %>
+        <span class="badge-status-header <%= status_class %>">
+          <span class="status-dot-header"></span>
+          <span><%= listing.status == "open" ? "ÅBEN FOR BUD" : "LUKKET" %></span>
+        </span>
+      <% end %>
+    </div>
+  </div>
+  
 
-      <div class="muted mb-3">
-        <strong>Beskrivelse</strong>
-      </div>
-      <div>
-        <%= simple_format(listing.description) %>
+  <!-- Description Section -->
+  <div class="surface-card section-card mt-4">
+    <div class="section-header">
+      <h2 class="section-title-with-accent">Beskrivelse</h2>
+    </div>
+    <div class="card-body pt-2">
+      <div class="listing-description">
+        <%= simple_format(listing.description.presence || "Ingen beskrivelse tilgængelig.") %>
       </div>
     </div>
   </div>
+</div>
 
+<!-- Image Section -->
+  <div class="surface-card section-card mt-4">
+    <div class="section-header">
+      <h2 class="section-title-with-accent">Billeder</h2>
+    </div>
+    <%= render "images", listing: @listing %>
+</div>
 </div>

@@ -1,8 +1,9 @@
 /* Main application stylesheet */
 
 /* Global layout */
-body {
-  background-color: #f5f5f7;
+.app-body {
+  min-height: 100vh;
+  background-color: #ffffff;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: #1f2933;
 }
@@ -10,7 +11,8 @@ body {
 .page-container {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 1.5rem 1rem 3rem;
+  padding: 1.75rem 1.25rem 3rem;
+  color: #020617;
 }
 
 .narrow-container {
@@ -48,7 +50,8 @@ body {
 }
 
 .navbar {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.15);
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.45);
 }
 
 .navbar-brand {
@@ -56,14 +59,45 @@ body {
   letter-spacing: 0.02em;
 }
 
+.app-navbar {
+  background-color: #111827;
+}
+
+.navbar-dark .nav-link {
+  color: rgba(248, 250, 252, 0.8);
+  font-size: 0.9rem;
+}
+
+.navbar-dark .nav-link:hover,
+.navbar-dark .nav-link.active {
+  color: #ffffff;
+}
+
 /* Cards / marketplace grid */
 .market-grid {
-  margin-top: 0.5rem;
+  margin-top: 1.25rem;
 }
 
 .card {
-  border-radius: 0.75rem;
+  border-radius: 0.9rem;
   border: 1px solid #e5e7eb;
+}
+
+.surface-card {
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+}
+
+.listing-card {
+  border: 1px solid #e5e7eb;
+  background-color: #f9fbff;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.listing-card:hover {
+  transform: translateY(-2px);
+  border-color: #cbd5f5;
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.14);
 }
 
 .card-title {
@@ -112,6 +146,41 @@ body {
 .btn-primary {
   border-radius: 999px;
   padding-inline: 1.25rem;
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.35);
+}
+
+.listing-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding-inline: 0.7rem;
+  padding-block: 0.25rem;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background-color: currentColor;
+}
+
+.pill-muted {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.75rem;
+  background-color: #e5e7eb;
+  color: #4b5563;
+}
+
+.listing-cta {
+  padding-inline: 1.1rem;
+}
+
+.btn-primary.btn-lg {
+  padding-inline: 1.6rem;
+  padding-block: 0.7rem;
 }
 
 .btn-light-outline {
@@ -137,4 +206,453 @@ footer.site-footer {
   border-top: 1px solid #e5e7eb;
   font-size: 0.85rem;
   color: #6b7280;
+}
+
+/* Marketplace hero */
+.market-hero {
+  background-color: #ffffff;
+  border-radius: 1.4rem;
+  padding: 1.75rem 1.5rem 1.5rem;
+  margin-bottom: 1.75rem;
+  border: 1px solid rgba(191, 219, 254, 0.9);
+  box-shadow: 0 26px 80px rgba(15, 23, 42, 0.16);
+}
+
+.market-hero-title {
+  font-size: 1.9rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+}
+
+.market-hero-subtitle {
+  margin: 0;
+  max-width: 36rem;
+  color: #1e293b;
+}
+
+.text-accent {
+  color: #0369a1;
+}
+
+.hero-secondary-text {
+  font-size: 0.9rem;
+  color: #1f2937;
+}
+
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(191, 219, 254, 0.8);
+  font-size: 0.8rem;
+}
+
+.stat-label {
+  color: #1f2937;
+}
+
+.stat-value {
+  font-weight: 600;
+  color: #0369a1;
+}
+
+/* Listing show / bids / chat */
+.listing-header-card {
+  background: linear-gradient(135deg, #6A6FFB, #5A5FEB);
+  border-radius: 1rem;
+  padding: 2rem;
+  color: white;
+  box-shadow: 0 20px 60px rgba(106, 111, 251, 0.3);
+  margin-bottom: 1.5rem;
+}
+
+.listing-header-icon {
+  font-size: 2rem;
+}
+
+.listing-header-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: white;
+}
+
+.badge-status-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-status-open-header {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: white;
+}
+
+.badge-status-closed-header {
+  background-color: rgba(34, 197, 94, 0.3);
+  color: white;
+}
+
+.status-dot-header {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background-color: currentColor;
+}
+
+.section-card {
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.section-card .card-body {
+  padding: 0 1.25rem 1.25rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1.25rem 0.75rem 1.75rem;
+  border-bottom: none;
+  position: relative;
+}
+
+.section-header::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.25rem;
+  bottom: 0;
+  width: 4px;
+  background-color: #6A6FFB;
+  border-radius: 0 2px 2px 0;
+}
+
+.section-icon {
+  font-size: 1.2rem;
+}
+
+.section-title-with-accent {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  color: #111827;
+}
+
+.bid-count-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.6rem;
+  background-color: #e5e7eb;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: #4b5563;
+}
+
+.listing-description {
+  font-size: 0.95rem;
+  color: #111827;
+  line-height: 1.6;
+}
+
+.bid-item-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.bid-item-card.bid-winner {
+  background-color: #f0fdf4;
+  border-color: #86efac;
+}
+
+.bid-price-large {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bid-currency-icon {
+  font-size: 1.2rem;
+}
+
+.bid-message {
+  font-size: 0.9rem;
+  color: #4b5563;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.bid-message-icon {
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.badge-winning-bid {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  background-color: #22c55e;
+  color: white;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge-icon {
+  font-size: 0.9rem;
+}
+
+.btn-delete-bid {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.btn-delete-bid:hover {
+  background-color: #fecaca;
+  color: #b91c1c;
+}
+
+.btn-accept-bid {
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.btn-accept-bid:hover {
+  background-color: #16a34a;
+  color: white;
+}
+
+.empty-bids-card {
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+
+.empty-bids-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-bids-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.empty-bids-text {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.closed-icon {
+  font-size: 2.5rem;
+  opacity: 0.6;
+}
+
+.closed-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.closed-text {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.form-label-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.form-icon {
+  font-size: 1rem;
+}
+
+.btn-send-bid {
+  background-color: #6A6FFB;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.6rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.btn-send-bid:hover {
+  background-color: #5A5FEB;
+  color: white;
+}
+
+.btn-action-secondary {
+  background-color: #ffffff;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-action-secondary:hover {
+  background-color: #f9fafb;
+  color: #111827;
+  border-color: #9ca3af;
+}
+
+.btn-action-delete {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-action-delete:hover {
+  background-color: #fecaca;
+  color: #b91c1c;
+  border-color: #f87171;
+}
+
+.chat-body {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 0.5rem 0;
+}
+
+.chat-message {
+  padding: 0.75rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+}
+
+.chat-message-meta {
+  font-size: 0.85rem;
+  color: #4b5563;
+  margin-bottom: 0.25rem;
+}
+
+.chat-message-body {
+  font-size: 0.9rem;
+  color: #111827;
+}
+
+.btn-send-chat {
+  background-color: #6A6FFB;
+  color: white;
+  border: none;
+  border-radius: 0 0.5rem 0.5rem 0;
+  padding: 0.5rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-send-chat:hover {
+  background-color: #5A5FEB;
+  color: white;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.listing-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+}
+
+/* Delete button */
+.delete-image-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+
+  background: rgba(220, 53, 69, 0.9); /* bootstrap red-ish */
+  color: white;
+  border: none;
+  font-size: 18px;
+  line-height: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+/* Show on hover */
+.image-wrapper:hover .delete-image-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Optional hover effect on image */
+.image-wrapper:hover .listing-image {
+  filter: brightness(0.85);
 }

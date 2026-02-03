@@ -1,35 +1,63 @@
 <% content_for :title, "Opslag" %>
 
-<div class="page-header">
-  <div>
-    <h1>Opslag</h1>
-    <p class="page-subtitle"> Alle jobs og projekter.</p>
-  </div>
-  <% if can? :create, Listing %>
-    <div>
-      <%= link_to "Opret opslag", new_listing_path, class: "btn btn-primary" %>
+<section class="market-hero">
+  <div class="hero-copy">
+    <h1 class="market-hero-title">
+      Find det rette firma <span class="text-accent">til dit næste projekt</span>
+    </h1>
+    <p class="market-hero-subtitle">
+      Opret et opslag for opgaver som tømrerarbejde, el, maling m.m. og lad seriøse virksomheder byde ind.
+    </p>
+    <div class="d-flex flex-wrap gap-2 align-items-center mt-3">
+      <% if can? :create, Listing %>
+        <%= link_to "Opret nyt opslag", new_listing_path, class: "btn btn-primary btn-lg" %>
+      <% end %>
+      <span class="hero-secondary-text">
+        Gennemse eksisterende projekter nedenfor.
+      </span>
     </div>
-  <% end %>
-</div>
+    <div class="hero-stats mt-4">
+      <div class="stat-pill">
+        <span class="stat-label">Aktive opslag</span>
+        <span class="stat-value"><%= @listings.count { |l| l.open? } %></span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-label">God til private &amp; erhverv</span>
+      </div>
+    </div>
+  </div>
+</section>
 
 <div class="row row-cols-1 row-cols-md-3 g-4 market-grid">
   <% @listings.each do |listing| %>
     <% if can? :read, listing %>
       <div class="col">
-        <div class="card h-100 shadow-sm">
+        <div class="card h-100 listing-card">
           <div class="card-body d-flex flex-column">
-            <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="d-flex justify-content-between align-items-center mb-2">
               <h5 class="card-title mb-0"><%= listing.title %></h5>
               <% if listing.status.present? %>
                 <% status_class = listing.status.to_s.downcase == "open" ? "badge-status-open" : "badge-status-closed" %>
-                <span class="badge-status <%= status_class %>">
-                  <%= listing.status == "open" ? "Åben" : "Lukket" %>
+                <span class="badge-status listing-status-pill <%= status_class %>">
+                  <span class="status-dot"></span>
+                  <span><%= listing.status == "open" ? "ÅBEN" : "LUKKET" %></span>
                 </span>
               <% end %>
             </div>
-            <p class="card-text mb-3"><%= truncate(listing.description, length: 110) %></p>
-            <div class="mt-auto d-flex justify-content-between align-items-center">
-              <%= link_to "Se detaljer", listing_path(listing), class: "btn btn-primary btn-sm" %>
+            <p class="card-text mb-2"><%= truncate(listing.description, length: 110) %></p>
+            <div class="mt-auto d-flex justify-content-between align-items-center pt-2">
+              <div>
+                <% if listing.bids.any? %>
+                  <span class="pill-muted">
+                    <%= pluralize(listing.bids.count, "bud") %>
+                  </span>
+                <% else %>
+                  <span class="pill-muted">
+                    Ingen bud endnu
+                  </span>
+                <% end %>
+              </div>
+              <%= link_to "Se detaljer →", listing_path(listing), class: "btn btn-primary btn-sm rounded-pill listing-cta" %>
             </div>
           </div>
         </div>

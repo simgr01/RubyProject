@@ -4,6 +4,7 @@ class Listing < ApplicationRecord
   belongs_to :user
   has_many :bids
   has_many :conversation
+  has_many_attached :images
 
   validates :title, :description, presence: true
 
