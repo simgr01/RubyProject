@@ -656,3 +656,21 @@ footer.site-footer {
 .image-wrapper:hover .listing-image {
   filter: brightness(0.85);
 }
+
+.pdf-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.pdf-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.pdf-filename {
+  font-size: 0.9rem;
+  color: #444;
+}
+

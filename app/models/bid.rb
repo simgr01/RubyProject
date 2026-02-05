@@ -3,7 +3,7 @@ class Bid < ApplicationRecord
 
   belongs_to :listing
   belongs_to :user
-
+  has_many_attached :documents
   validates :price, numericality: { greater_than: 0 }
 
 

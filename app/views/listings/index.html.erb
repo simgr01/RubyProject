@@ -19,7 +19,7 @@
     <div class="hero-stats mt-4">
       <div class="stat-pill">
         <span class="stat-label">Aktive opslag</span>
-        <span class="stat-value"><%= @listings.count { |l| l.open? } %></span>
+        <span class="stat-value"><%= @listings.active.count { |l| l.open? } %></span>
       </div>
       <div class="stat-pill">
         <span class="stat-label">God til private &amp; erhverv</span>
@@ -49,7 +49,7 @@
               <div>
                 <% if listing.bids.any? %>
                   <span class="pill-muted">
-                    <%= pluralize(listing.bids.count, "bud") %>
+                    <%= pluralize(listing.bids.active.count, "bud") %>
                   </span>
                 <% else %>
                   <span class="pill-muted">

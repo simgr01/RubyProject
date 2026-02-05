@@ -26,6 +26,16 @@
                   <%= bid.message %>
                 </div>
               <% end %>
+              <% if bid.documents.any? %>
+                <div class="bid-documents mt-2">
+                  <% bid.documents.each do |document| %>
+                    <%= link_to url_for(document), target: "_blank", class: "pdf-link" do %>
+                    <%= image_tag "pdf.svg", class: "pdf-icon", alt: "PDF" %>
+                    <span class="pdf-filename"><%= document.filename %></span>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
             </div>
             <div class="d-flex flex-column align-items-end gap-2">
               <% if bid.accepted? %>
@@ -85,6 +95,13 @@
             Besked (valgfrit)
           </label>
           <%= f.text_area :message, class: "form-control", rows: 4, placeholder: "Tilføj en besked til dit bud..." %>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label-with-icon">
+            Dokumenter (valgfrit)
+          </label>
+          <%= f.file_field :documents, multiple: true, class: "form-control", accept: "application/pdf" %>
         </div>
 
         <%= f.submit "Send bud", class: "btn btn-primary btn-send-bid" %>
